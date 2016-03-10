@@ -36,7 +36,7 @@ ENDIF(ENABLE_TESTING)
 IF(ENABLE_TESTING)
     IF (NOT EXISTS ${CMAKE_CURRENT_BINARY_DIR}/data)
         # copy data symlink to cmake binary dir so that we can execute meta examples in there
-        file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/data DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+        EXECUTE_PROCESS(COMMAND ${CMAKE_COMMAND} -E create_symlink "${CMAKE_CURRENT_SOURCE_DIR}/data" "${CMAKE_CURRENT_BINARY_DIR}/data")
     ENDIF()
                                                               
 
