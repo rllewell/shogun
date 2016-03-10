@@ -37,7 +37,7 @@ Our [Python examples](https://github.com/shogun-toolbox/shogun/tree/develop/exam
 
 
 ### Render locally
-We automatically upload the cookbook to our webserver in the [nightly build](http://buildbot.shogun-toolbox.org/builders/nightly_all). However, you should have a look at your page before you send a pull request.
+We automatically upload the cookbook to our webserver in the [PR build on buildbot](http://buildbot.shogun-toolbox.org/builders/deb1%20-%20libshogun%20-%20PR), where you can also find a html preview. However, you should have a look at your page before you send a pull request.
 
 This can be done as running
 
