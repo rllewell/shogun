@@ -9,7 +9,7 @@ FOREACH(META_EXAMPLE ${META_EXAMPLES})
 
     # meta examples have to be generated before executable and test is added
     SET(GENERATED_CPP ${EXAMPLE_REL_DIR}/${EXAMPLE_NAME}.cpp)
-    SET(GENERATED_CPP_BINARY ${EXAMPLE_NAME_WITH_DIR})
+    SET(GENERATED_CPP_BINARY compiled_cpp_${EXAMPLE_NAME_WITH_DIR})
 
     # generate binary in relative directory
     SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${EXAMPLE_REL_DIR})
