@@ -58,8 +58,9 @@ in that directory and then open your browser at ```localhost:8000```.
 
 ## Python requirements
 The cookbook is automatically built if these dependencies are met:
- * ```cmake``` switch ```-DBUILD_META_EXAMPLES```
+ * `cmake` switch `-DBUILD_META_EXAMPLES`
  * [sphinx](http://www.sphinx-doc.org/)
+ * [python-ply](http://www.dabeaz.com/ply/)
  
 In addition this python module needs to be installed to enable bibtex citations.
  * [sphinxcontrib-bibtex](https://sphinxcontrib-bibtex.readthedocs.org/)
