@@ -3,10 +3,12 @@ GET_PYTHON_ENV()
 
 # working directory of tester should be binary dir so link data folders
 IF (NOT EXISTS ${CMAKE_CURRENT_BINARY_DIR}/reference_results)
-    EXECUTE_PROCESS(COMMAND ${CMAKE_COMMAND} -E create_symlink "${CMAKE_CURRENT_SOURCE_DIR}/reference_results" "${CMAKE_CURRENT_BINARY_DIR}/reference_results")
+    # TODO is there a better way to link this?
+    EXECUTE_PROCESS(COMMAND ${CMAKE_COMMAND} -E create_symlink "${CMAKE_CURRENT_SOURCE_DIR}/../../data/testsuite/meta/" "${CMAKE_CURRENT_BINARY_DIR}/reference_results")
 ENDIF()
 IF (NOT EXISTS ${CMAKE_CURRENT_BINARY_DIR}/generated_results)
-    EXECUTE_PROCESS(COMMAND ${CMAKE_COMMAND} -E create_symlink "${CMAKE_CURRENT_SOURCE_DIR}/generated_results" "${CMAKE_CURRENT_BINARY_DIR}/generated_results")
+    # TODO is there a better way to link this?
+    EXECUTE_PROCESS(COMMAND ${CMAKE_COMMAND} -E create_symlink "${CMAKE_CURRENT_SOURCE_DIR}/../../build/examples/meta" "${CMAKE_CURRENT_BINARY_DIR}/generated_results")
 ENDIF()
 FILE(COPY ${CMAKE_CURRENT_SOURCE_DIR}/tester.py DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
