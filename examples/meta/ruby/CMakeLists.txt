@@ -6,14 +6,11 @@ FOREACH(META_EXAMPLE ${META_EXAMPLES})
     # assume a structure <target_language>/<category>/listing.sg
 	STRING(REGEX REPLACE ".*/(.*).sg" "\\1" EXAMPLE_NAME ${META_EXAMPLE})
 	STRING(REGEX REPLACE ".*/(.*/.*).sg" "\\1" EXAMPLE_NAME_WITH_DIR ${META_EXAMPLE})
-	STRING(REGEX REPLACE "/" "-" EXAMPLE_NAME_WITH_DIR ${EXAMPLE_NAME_WITH_DIR})
+	STRING(REGEX REPLACE "/" "_" EXAMPLE_NAME_WITH_DIR ${EXAMPLE_NAME_WITH_DIR})
     STRING(REGEX REPLACE ".*/(.*)/.*.sg" "\\1" EXAMPLE_REL_DIR ${META_EXAMPLE})
     
-    # run test in source dir, to have access to "data" folder
-    # run listing from binary dir though as it is generated there
-    
 	add_test(NAME generated_ruby-${EXAMPLE_NAME_WITH_DIR}
-			WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+			WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/{EXAMPLE_REL_DIR}
 			COMMAND ${RUBY_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/${EXAMPLE_REL_DIR}/${EXAMPLE_NAME}.rb)
 	set_property(TEST generated_ruby-${EXAMPLE_NAME_WITH_DIR} PROPERTY
 		ENVIRONMENT "RUBYLIB=${RUBY_MODULAR_SOURCE_DIR}:${RUBY_MODULAR_BINARY_DIR}:.")

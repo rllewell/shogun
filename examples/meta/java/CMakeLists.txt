@@ -8,7 +8,7 @@ FOREACH(META_EXAMPLE ${META_EXAMPLES})
     # assume a structure <target_language>/<category>/listing.sg
 	STRING(REGEX REPLACE ".*/(.*).sg" "\\1" EXAMPLE_NAME ${META_EXAMPLE})
 	STRING(REGEX REPLACE ".*/(.*/.*).sg" "\\1" EXAMPLE_NAME_WITH_DIR ${META_EXAMPLE})
-	STRING(REGEX REPLACE "/" "-" EXAMPLE_NAME_WITH_DIR ${EXAMPLE_NAME_WITH_DIR})
+	STRING(REGEX REPLACE "/" "_" EXAMPLE_NAME_WITH_DIR ${EXAMPLE_NAME_WITH_DIR})
     STRING(REGEX REPLACE ".*/(.*)/.*.sg" "\\1" EXAMPLE_REL_DIR ${META_EXAMPLE})
 
 	ADD_CUSTOM_COMMAND(OUTPUT ${EXAMPLE_NAME_WITH_DIR}.class
@@ -17,11 +17,8 @@ FOREACH(META_EXAMPLE ${META_EXAMPLES})
 				  DEPENDS java_modular)
 	LIST(APPEND JAVA_EXAMPLES ${EXAMPLE_NAME_WITH_DIR}.class)
 
-    # run test in source dir, to have access to "data" folder
-    # run class from binary dir though as it is generated there
-    # add class location to classpath to do that
 	add_test(NAME generated_java-${EXAMPLE_NAME_WITH_DIR}
-			WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+			WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/{EXAMPLE_REL_DIR}
 			COMMAND ${Java_JAVA_EXECUTABLE} ${JAVAOPTS}
 				-cp ${CLASSPATH}:${CMAKE_CURRENT_BINARY_DIR}/${EXAMPLE_REL_DIR}
 				-Djava.library.path=${JAVA_LIB_PATH} ${EXAMPLE_NAME})
