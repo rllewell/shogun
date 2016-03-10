@@ -1075,6 +1075,7 @@ OPTION(ENABLE_TESTING "Enable testing" OFF)
 OPTION(TRAVIS_DISABLE_UNIT_TESTS "Disable unit testing to speed up jobs on travis-ci" OFF)
 OPTION(TRAVIS_DISABLE_LIBSHOGUN_TESTS "Disable libshogun tests to speed up jobs on travis-ci" OFF)
 OPTION(INTEGRATION_TESTS_ENABLED "Enable integration testing (legacy)" OFF)
+OPTION(TRAVIS_DISABLE_META_INTEGRATION_TESTS "Disable meta integration testing to speed up  jobs on travis-ci" OFF)
 
 IF(ENABLE_TESTING)
 	FIND_PACKAGE(Jinja2)
@@ -1092,6 +1093,11 @@ IF(ENABLE_TESTING)
 		IF (NOT TRAVIS_DISABLE_UNIT_TESTS)
 			add_subdirectory(${CMAKE_SOURCE_DIR}/tests/unit)
 		ENDIF()
+		
+		IF (NOT TRAVIS_DISABLE_META_INTEGRATION_TESTS)
+		    add_subdirectory(${CMAKE_SOURCE_DIR}/tests/meta)
+		ENDIF()
+		
 	ENDIF()
 ENDIF()
 

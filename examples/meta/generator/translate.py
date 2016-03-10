@@ -55,7 +55,7 @@ class Translator:
         storageFile = "__sg_storage_file"
 
         # TODO: handle directories
-        storageFilename = {"Expr": {"StringLiteral": "{}{}.txt".format(programName, self.targetDict['FileExtension'])}}
+        storageFilename = {"Expr": {"StringLiteral": "{}.dat".format(programName)}}
         # 'w'
         storageFilemode = {"Expr": {"NumberLiteral": "119"}}
         storageComment = {"Comment": {"StringLiteral": "Serialize output for integration testing (automatically generated)"}}

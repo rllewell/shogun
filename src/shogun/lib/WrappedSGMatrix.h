@@ -55,7 +55,6 @@ public:
 	/** Default constructor. Do not use. */
 	CWrappedSGMatrix() : CSGObject()
 	{
-		m_value_name = "Unnamed";
 		set_generic<T>();
 		register_params();
 	}
@@ -66,10 +65,10 @@ public:
 	*/
 	CWrappedSGMatrix(SGMatrix<T> value, const char* value_name="")
 	{
-		m_value = value;
-		m_value_name = value_name;
 		set_generic<T>();
 		register_params();
+		m_value = value;
+		m_value_name = value_name;
 	}
 
 	/** @return name of the CSGObject, without C prefix */
@@ -78,7 +77,10 @@ public:
 private:
 	void register_params()
 	{
-		SG_ADD(&m_value, m_value_name, "Wrapped value", MS_NOT_AVAILABLE);
+	    m_value_name = "Unnamed";
+	    m_value = SGMatrix<T>();
+	    
+		SG_ADD(&m_value, "value", "Wrapped value", MS_NOT_AVAILABLE);
 	}
 
 protected:
