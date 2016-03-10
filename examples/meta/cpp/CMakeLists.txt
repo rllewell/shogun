@@ -32,7 +32,3 @@ ENDFOREACH()
 add_custom_target(build_cpp_meta_examples ALL
     DEPENDS ${GENERATED_CPP_EXAMPLES}
     COMMENT "Compiled generated cpp examples")
-
-INSTALL(PROGRAMS ${INSTALL_EXAMPLES}
-        DESTINATION share/shogun/examples/meta/cpp
-        COMPONENT meta-examples-cpp)
