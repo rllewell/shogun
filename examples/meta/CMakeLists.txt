@@ -34,6 +34,11 @@ ENDIF(ENABLE_TESTING)
 
 # If testing is enabled we run the examples
 IF(ENABLE_TESTING)
+    # copy data symlink to cmake binary dir so that we can execute meta examples in there
+    file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/data DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+    execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_SOURCE_DIR}/data
+                                                           ${CMAKE_BINARY_DIR}/data)
+
     # c++
     IF (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/cpp)
         add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/cpp)
