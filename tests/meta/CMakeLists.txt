@@ -14,7 +14,6 @@ IF (NOT EXISTS ${CMAKE_CURRENT_BINARY_DIR}/generated_results)
 	ENDIF()
 	EXECUTE_PROCESS(COMMAND ${CMAKE_COMMAND} -E create_symlink "${CMAKE_BINARY_DIR}/examples/meta" "${CMAKE_CURRENT_BINARY_DIR}/generated_results")
 ENDIF()
-FILE(COPY ${CMAKE_CURRENT_SOURCE_DIR}/tester.py DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 # compile tester c++ binary
 ADD_EXECUTABLE(meta_example_integration_tester ${CMAKE_CURRENT_SOURCE_DIR}/tester.cpp)
