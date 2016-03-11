@@ -1093,11 +1093,6 @@ IF(ENABLE_TESTING)
 		IF (NOT TRAVIS_DISABLE_UNIT_TESTS)
 			add_subdirectory(${CMAKE_SOURCE_DIR}/tests/unit)
 		ENDIF()
-		
-		IF (NOT TRAVIS_DISABLE_META_INTEGRATION_TESTS)
-		    add_subdirectory(${CMAKE_SOURCE_DIR}/tests/meta)
-		ENDIF()
-		
 	ENDIF()
 ENDIF()
 
@@ -1121,6 +1116,14 @@ IF(EXISTS ${CMAKE_SOURCE_DIR}/examples)
 	IF(BUILD_META_EXAMPLES)
         # allow meta examples without adding examples dir itself
         add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/examples/meta)
+        
+        IF(ENABLE_TESTING)
+            IF(EXISTS ${CMAKE_SOURCE_DIR}/tests)
+        		IF(NOT TRAVIS_DISABLE_META_INTEGRATION_TESTS)
+		            add_subdirectory(${CMAKE_SOURCE_DIR}/tests/meta)
+		        ENDIF()
+		    ENDIF()
+        ENDIF()
     ENDIF()
 ENDIF()
 
