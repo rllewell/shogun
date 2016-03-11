@@ -17,23 +17,23 @@ ENDIF()
 FILE(COPY ${CMAKE_CURRENT_SOURCE_DIR}/tester.py DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 # compile tester c++ binary
-ADD_EXECUTABLE(tester ${CMAKE_CURRENT_SOURCE_DIR}/tester.cpp)
-ADD_DEPENDENCIES(tester shogun)
-target_link_libraries(tester shogun ${SANITIZER_LIBRARY})
+ADD_EXECUTABLE(meta_example_integration_tester ${CMAKE_CURRENT_SOURCE_DIR}/tester.cpp)
+ADD_DEPENDENCIES(meta_example_integration_tester shogun)
+target_link_libraries(meta_example_integration_tester shogun ${SANITIZER_LIBRARY})
 
 FILE(GLOB META_INTEGRATION_REFERENCES ${CMAKE_CURRENT_BINARY_DIR}/reference_results/*/*.dat)
 FOREACH(REFERENCE_FILE ${META_INTEGRATION_REFERENCES})
 	# assume a structure <target_language>/<category>/result.dat
 	STRING(REGEX REPLACE ".*/(.*).dat" "\\1" NAME ${REFERENCE_FILE})
-	STRING(REGEX REPLACE ".*/(.*/.*).dat" "\\1" NAME_WITH_DIR ${REFERENCE_FILE})
-	STRING(REGEX REPLACE "/" "_" NAME_WITH_DIR ${NAME_WITH_DIR})
-	STRING(REGEX REPLACE ".*/(.*)/.*.dat" "\\1" REL_DIR ${REFERENCE_FILE})
-	
+	STRING(REGEX REPLACE ".*/(.*//.*).dat" "\\1" NAME_WITH_DIR ${REFERENCE_FILE})
+	STRING(REGEX REPLACE "//" "_" NAME_WITH_DIR ${NAME_WITH_DIR})
+	STRING(REGEX REPLACE ".*/(.*)//.*.dat" "\\1" REL_DIR ${REFERENCE_FILE})
+
 	# cpp
 	# TODO implement other languages tests
 	add_test(NAME integration_meta_cpp-${NAME_WITH_DIR}
 		WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-		COMMAND tester ${REL_DIR} ${NAME}.dat cpp generated_results reference_results)
+		COMMAND meta_example_integration_tester ${REL_DIR} ${NAME}.dat cpp generated_results reference_results)
 	set_tests_properties(
 		integration_meta_cpp-${NAME_WITH_DIR}
 			PROPERTIES
