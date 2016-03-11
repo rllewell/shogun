@@ -21,7 +21,6 @@ FOREACH(META_EXAMPLE ${META_EXAMPLES})
 
     LIST(APPEND GENERATED_CPP_EXAMPLES ${GENERATED_CPP_BINARY})
 
-    # run test in source dir, to have access to "data" folder
     ADD_TEST(NAME generated_cpp-${EXAMPLE_NAME}
              COMMAND ${GENERATED_CPP_BINARY}
              WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${EXAMPLE_REL_DIR})
