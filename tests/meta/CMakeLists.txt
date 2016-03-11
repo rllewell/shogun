@@ -26,9 +26,11 @@ FOREACH(REFERENCE_FILE ${META_INTEGRATION_REFERENCES})
 	IF(PythonModular)
 	    add_test(NAME integration_meta_cpp-${NAME_WITH_DIR}
 		    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-		    COMMAND ${PYTHON_EXECUTABLE} tester.py -r ${REL_DIR} -f ${NAME}.dat -t cpp -g generated_results -i reference_results
-		    DEPENDS build_cpp_meta_examples)
+		    COMMAND ${PYTHON_EXECUTABLE} tester.py -r ${REL_DIR} -f ${NAME}.dat -t cpp -g generated_results -i reference_results)
         set_property(TEST integration_meta_cpp-${NAME_WITH_DIR} PROPERTY
 			    ENVIRONMENT "${PYTHON_ENV_VARS}")
+	    # run generated cpp before comparing results
+	    set_property(TEST integration_meta_cpp-${NAME_WITH_DIR} PROPERTY
+	            DEPENDS generated_cpp-${EXAMPLE_NAME})
 	ENDIF()
 ENDFOREACH()
