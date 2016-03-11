@@ -10,11 +10,16 @@ IF (NOT EXISTS ${CMAKE_CURRENT_BINARY_DIR}/reference_results)
 ENDIF()
 IF (NOT EXISTS ${CMAKE_CURRENT_BINARY_DIR}/generated_results)
 	IF (NOT EXISTS ${CMAKE_BINARY_DIR}/examples/meta)
-		MESSAGE(FATAL_ERROR "Meta examples directory does not exists!")
+		#MESSAGE(FATAL_ERROR "Meta examples directory does not exists!")
 	ENDIF()
 	EXECUTE_PROCESS(COMMAND ${CMAKE_COMMAND} -E create_symlink "${CMAKE_BINARY_DIR}/examples/meta" "${CMAKE_CURRENT_BINARY_DIR}/generated_results")
 ENDIF()
 FILE(COPY ${CMAKE_CURRENT_SOURCE_DIR}/tester.py DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
+# compile tester c++ binary
+ADD_EXECUTABLE(tester ${CMAKE_CURRENT_SOURCE_DIR}/tester.cpp)
+ADD_DEPENDENCIES(tester shogun)
+target_link_libraries(tester shogun ${SANITIZER_LIBRARY})
 
 FILE(GLOB META_INTEGRATION_REFERENCES ${CMAKE_CURRENT_BINARY_DIR}/reference_results/*/*.dat)
 FOREACH(REFERENCE_FILE ${META_INTEGRATION_REFERENCES})
@@ -26,16 +31,12 @@ FOREACH(REFERENCE_FILE ${META_INTEGRATION_REFERENCES})
 	
 	# cpp
 	# TODO implement other languages tests
-	# TODO tester.py should be written in c++ so that python_modular is not needed
-	IF(PythonModular)
-		add_test(NAME integration_meta_cpp-${NAME_WITH_DIR}
-			WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-			COMMAND ${PYTHON_EXECUTABLE} tester.py -r ${REL_DIR} -f ${NAME}.dat -t cpp -g generated_results -i reference_results)
-		set_tests_properties(
-			integration_meta_cpp-${NAME_WITH_DIR}
-				PROPERTIES
-				ENVIRONMENT "${PYTHON_ENV_VARS}"
-				DEPENDS generated_cpp-${EXAMPLE_NAME}
-		)
-	ENDIF()
+	add_test(NAME integration_meta_cpp-${NAME_WITH_DIR}
+		WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+		COMMAND tester ${REL_DIR} ${NAME}.dat cpp generated_results reference_results)
+	set_tests_properties(
+		integration_meta_cpp-${NAME_WITH_DIR}
+			PROPERTIES
+			DEPENDS generated_cpp-${EXAMPLE_NAME}
+	)
 ENDFOREACH()
