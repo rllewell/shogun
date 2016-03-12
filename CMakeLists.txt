@@ -1084,15 +1084,17 @@ IF(ENABLE_TESTING)
 	ENDIF()
 
 	IF(EXISTS ${CMAKE_SOURCE_DIR}/tests)
-		# add integration tests
-		if (INTEGRATION_TESTS_ENABLED)
+		if (INTEGRATION_TESTS_ENABLED AND EXISTS ${CMAKE_SOURCE_DIR}/tests/integration)
 			add_subdirectory(${CMAKE_SOURCE_DIR}/tests/integration)
 		ENDIF()
 
-		# add unit tests
-		IF (NOT TRAVIS_DISABLE_UNIT_TESTS)
+		IF (NOT TRAVIS_DISABLE_UNIT_TESTS AND EXISTS ${CMAKE_SOURCE_DIR}/tests/unit)
 			add_subdirectory(${CMAKE_SOURCE_DIR}/tests/unit)
 		ENDIF()
+		
+		IF(NOT TRAVIS_DISABLE_META_INTEGRATION_TESTS AND EXISTS ${CMAKE_SOURCE_DIR}/tests/meta)
+            add_subdirectory(${CMAKE_SOURCE_DIR}/tests/meta)
+        ENDIF()
 	ENDIF()
 ENDIF()
 
@@ -1116,14 +1118,6 @@ IF(EXISTS ${CMAKE_SOURCE_DIR}/examples)
 	IF(BUILD_META_EXAMPLES)
         # allow meta examples without adding examples dir itself
         add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/examples/meta)
-        
-        IF(ENABLE_TESTING)
-            IF(EXISTS ${CMAKE_SOURCE_DIR}/tests)
-        		IF(NOT TRAVIS_DISABLE_META_INTEGRATION_TESTS)
-		            add_subdirectory(${CMAKE_SOURCE_DIR}/tests/meta)
-		        ENDIF()
-		    ENDIF()
-        ENDIF()
     ENDIF()
 ENDIF()
 
