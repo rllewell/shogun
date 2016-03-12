@@ -23,7 +23,7 @@ int main(int argc, const char *argv[])
     os << generated_results_dir << "/" << target << "/" << rel_dir << "/" << name;
     string fname_full_generated = os.str();
     os.str("");
-    os << reference_results_dir << "/" << "/" << rel_dir << "/" << name;
+    os << reference_results_dir << "/" << rel_dir << "/" << name;
     string fname_full_reference = os.str();
 
     init_shogun_with_defaults();
