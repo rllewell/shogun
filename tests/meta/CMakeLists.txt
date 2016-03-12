@@ -36,6 +36,6 @@ FOREACH(REFERENCE_FILE ${META_INTEGRATION_REFERENCES})
 	set_tests_properties(
 		integration_meta_cpp-${NAME_WITH_DIR}
 			PROPERTIES
-			DEPENDS generated_cpp-${EXAMPLE_NAME}
+			DEPENDS generated_cpp-${NAME}
 	)
 ENDFOREACH()
