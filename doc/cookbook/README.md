@@ -12,11 +12,13 @@ This is achieved by the following high-level steps:
 3. Automatically build a static html page with a global tab for each of Shogun's target languages. The user can toggle the shown language of the snippets without switching the page itself.
 
 ## Adding a page
-To add an entry, only two files are needed:
+To add an entry, only two files are needed (plus a test):
 
  * A meta language example, e.g. ```shogun/examples/meta/src/classifier/knn.sg``` (which during the build process is automatically translated to ```build/examples/python/classifier/knn.py```, ```build/examples/R/classifier/knn.R```, etc). The file should contain a number of snippet start and end markers, see for example [knn.sg](https://github.com/shogun-toolbox/shogun/blob/feature/sphinxdoc/examples/meta/src/classifier/knn.sg).
  
  * A Sphinx markdown file with matching filename and directory, e.g. ```shogun/doc/sphinx/source/examples/classifier/knn.rst```. This file contains a description of the API example and references to code snippets. The point is to *not* show the full file listing but only a subset. The file should furthermore contain basic math in the form of LaTeX, important references (wikipedia, scientific paper references using BibTeX, etc), and links to the involved Shogun class documentation, github issues, etc. We use Sphinx tags to make this easy, see for example [knn.rst](https://github.com/shogun-toolbox/shogun/blob/feature/sphinxdoc/doc/cookbook/source/examples/classifier/knn.rst).
+
+ * All added meta examples are part of Shogun's integration testing. All numerical output (vector, matrix, real) is serialized to file at the end of each example. You might have to [put results in a variable](https://github.com/shogun-toolbox/shogun/blob/feature/sphinxdoc/examples/meta/src/classifier/knn.sg#L28) if they are hidden within a Shogun object. Have a look at the generated listings to see how. You can easily add a generated file to the [data](https://github.com/shogun-toolbox/shogun-data/tree/master/testsuite/meta/) repository. Once added, all future results of a test file will be compared to this reference file. Note as opposed to the old integration testing system in pace, only *numerical* outputs are compared. Please keep the example output files small.
 
 ## Guidelines
 
